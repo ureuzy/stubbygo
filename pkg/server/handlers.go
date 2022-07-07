@@ -22,16 +22,17 @@ func (e *Endpoints) Match(param string) *Endpoint {
 }
 
 type Method struct {
-	Type    string    `yaml:"type"`
-	Handler *Response `yaml:"response"`
+	Type      string    `yaml:"type"`
+	QueryKeys []string  `yaml:"query_keys"`
+	Handler   *Response `yaml:"response"`
 }
 
 type Methods []*Method
 
-func (m *Methods) Match(method string) *Response {
+func (m *Methods) Match(method string) *Method {
 	for _, v := range *m {
 		if method == v.Type {
-			return v.Handler
+			return v
 		}
 	}
 	return nil
@@ -46,12 +47,13 @@ type Response struct {
 
 type Responses []*Response
 
-func (r *Response) Func(w http.ResponseWriter, _ *http.Request) {
+func (r *Response) Func(w http.ResponseWriter, body any) {
 	for key, value := range r.Headers {
 		w.Header().Set(key, value)
 	}
+
 	w.WriteHeader(r.StatusCode)
-	fmt.Fprint(w, r.Body)
+	fmt.Fprint(w, body)
 }
 
 func UndefinedEndpoint(w http.ResponseWriter, status int) {

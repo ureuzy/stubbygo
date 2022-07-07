@@ -2,45 +2,33 @@ endpoints:
   - path: "/"
     methods:
       - type: "GET"
+        query_keys: ["foo", "bar"]
         response:
           status_code: 200
           headers:
-            Content-Type: "text/plain"
+            Content-Type: "application/json"
             Access-Control-Allow-Origin: "*"
-          body: "hello,world"
+          body: '
+            {"data":
+              [
+                {"key": "foo", "value": "{{.foo}}"},
+                {"key": "bar", "value": "{{.bar}}"}
+              ]
+            }
+          '
       - type: "POST"
         response:
           status_code: 200
           headers:
             Content-Type: "text/plain"
-          body: "hello,world"
+          body: "ok"
 
-  - path: "/json"
+  - path: "/docs"
     methods:
       - type: "GET"
         response:
           status_code: 200
           headers:
-            Content-Type: "application/json"
-          body: '{
-               "glossary": {
-                   "title": "example glossary",
-           		"GlossDiv": {
-                       "title": "S",
-           			"GlossList": {
-                           "GlossEntry": {
-                               "ID": "SGML",
-           					"SortAs": "SGML",
-           					"GlossTerm": "Standard Generalized Markup Language",
-           					"Acronym": "SGML",
-           					"Abbrev": "ISO 8879:1986",
-           					"GlossDef": {
-                                   "para": "A meta-markup language, used to create markup languages such as DocBook.",
-           						"GlossSeeAlso": ["GML", "XML"]
-                               },
-           					"GlossSee": "markup"
-                           }
-                       }
-                   }
-               }
-           }'
+            Content-Type: "text/plain"
+          body: 'hello,world'
+  

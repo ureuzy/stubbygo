@@ -1,8 +1,10 @@
 package server
 
 import (
+	"bytes"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 type Router struct {
@@ -19,11 +21,30 @@ func (ro *Router) Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	handler := endpoint.Methods.Match(r.Method)
-	if handler == nil {
+	method := endpoint.Methods.Match(r.Method)
+	if method == nil {
 		UndefinedEndpoint(w, http.StatusMethodNotAllowed)
 		return
 	}
 
-	handler.Func(w, r)
+	var body bytes.Buffer
+	if 0 < len(method.QueryKeys) {
+		t, err := template.New("body").Parse(method.Handler.Body.(string))
+		if err != nil {
+			ro.logger.Println(err)
+			return
+		}
+		qmap := map[string]string{}
+		for _, v := range method.QueryKeys {
+			qmap[v] = r.URL.Query().Get(v)
+		}
+		if err = t.Execute(&body, qmap); err != nil {
+			ro.logger.Println(err)
+			return
+		}
+		method.Handler.Func(w, body.String())
+		return
+	} else {
+		method.Handler.Func(w, method.Handler.Body)
+	}
 }
