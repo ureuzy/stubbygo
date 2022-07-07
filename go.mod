@@ -1,4 +1,4 @@
-module github.com/masanetes/gostub
+module github.com/masanetes/stubbygo
 
 go 1.18
 

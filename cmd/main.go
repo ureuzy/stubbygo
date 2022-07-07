@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/masanetes/gostub/pkg/server"
+	"github.com/masanetes/stubbygo/pkg/server"
 )
 
 func main() {

@@ -7,7 +7,6 @@ endpoints:
           status_code: 200
           headers:
             Content-Type: "application/json"
-            Access-Control-Allow-Origin: "*"
           body: '
             {"data":
               [
@@ -18,7 +17,7 @@ endpoints:
           '
       - type: "POST"
         response:
-          status_code: 200
+          status_code: 201
           headers:
             Content-Type: "text/plain"
           body: "ok"
