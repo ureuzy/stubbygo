@@ -22,9 +22,9 @@ func (e *Endpoints) Match(param string) *Endpoint {
 }
 
 type Method struct {
-	Type      string    `yaml:"type"`
-	QueryKeys []string  `yaml:"query_keys"`
-	Handler   *Response `yaml:"response"`
+	Type    string    `yaml:"type"`
+	Queries []string  `yaml:"queries"`
+	Handler *Response `yaml:"response"`
 }
 
 type Methods []*Method

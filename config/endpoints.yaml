@@ -2,32 +2,16 @@ endpoints:
   - path: "/"
     methods:
       - type: "GET"
-        query_keys: ["foo", "bar"]
+        queries: ["foo", "bar"]
         response:
           status_code: 200
           headers:
-            Content-Type: "application/json"
-          body: '
-            {"data":
-              [
-                {"key": "foo", "value": "{{.foo}}"},
-                {"key": "bar", "value": "{{.bar}}"}
-              ]
-            }
-          '
+            Content-Type: "text/plain"
+          body: "{{.foo}},{{.bar}}"
       - type: "POST"
         response:
           status_code: 201
           headers:
             Content-Type: "text/plain"
           body: "ok"
-
-  - path: "/docs"
-    methods:
-      - type: "GET"
-        response:
-          status_code: 200
-          headers:
-            Content-Type: "text/plain"
-          body: 'hello,world'
   

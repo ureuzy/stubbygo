@@ -1,13 +1,24 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/masanetes/stubbygo/pkg/server"
 )
 
+var (
+	c = flag.String("c", "", "config file")
+)
+
 func main() {
-	if err := server.Run(); err != nil {
+	flag.Parse()
+
+	if *c == "" {
+		log.Fatal("must be specified config.yaml")
+	}
+
+	if err := server.Run(*c); err != nil {
 		log.Fatal(err)
 	}
 }

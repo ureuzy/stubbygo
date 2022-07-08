@@ -16,22 +16,16 @@ endpoints:
           headers:
             Content-Type: "text/plain"
           body: 'hello,world'
-      - type: "POST"
-        response:
-          status_code: 201
-          headers:
-            Content-Type: "text/plain"
-          body: "ok"
 ```
 
 Start stub server
 
 ```
-$ go run cmd/main.go
+$ go run cmd/main.go -c config.yaml
 2022/07/07 18:10:55 server listen :8080 ...
 ```
 
-Request
+Request / Response
 
 ```
 $ curl -i -X GET 'http://localhost:8080'
@@ -43,19 +37,9 @@ Content-Length: 11
 hello,world
 ```
 
-```
-$ curl -i -X POST -H "Content-Type:application/json" 'http://localhost:8080'
-HTTP/1.1 201 Created
-Content-Type: text/plain
-Date: Thu, 07 Jul 2022 09:39:46 GMT
-Content-Length: 2
-
-ok
-```
-
 ## Embed Query Parameters
 
-The values of query parameters can be embedded in the response. The key is to include `query_keys`. 
+The values of query parameters can be embedded in the response. The key is to include `queries`. 
 This allows you to use the template syntax in the body to embed them.
 
 ```yaml
@@ -63,28 +47,21 @@ endpoints:
   - path: "/"
     methods:
       - type: "GET"
-        query_keys: ["foo", "bar"]
+        queries: ["foo", "bar"]
         response:
           status_code: 200
           headers:
-            Content-Type: "application/json"
-          body: '
-            {"data":
-              [
-                {"key": "foo", "value": "{{.foo}}"},
-                {"key": "bar", "value": "{{.bar}}"}
-              ]
-            }
-          '
+            Content-Type: "text/plain"
+          body: "{{.foo}},{{.bar}}"
 ```
 
 ```
-$ curl -i -X GET 'http://localhost:8080?foo=foo_value&bar=bar_value'
+$ curl -i -X GET 'http://localhost:8080?foo=hello&bar=world'
 HTTP/1.1 200 OK
 Access-Control-Allow-Origin: *
 Content-Type: application/json
 Date: Thu, 07 Jul 2022 09:31:13 GMT
 Content-Length: 91
 
-{"data": [ {"key": "foo", "value": "foo_value"}, {"key": "bar", "value": "bar_value"} ] }
+hello,world
 ```

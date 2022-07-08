@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func Run() error {
-	config, err := LoadConfig()
+func Run(configPath string) error {
+	config, err := LoadConfig(configPath)
 	if err != nil {
 		return err
 	}
