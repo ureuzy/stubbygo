@@ -17,34 +17,42 @@ func (ro *Router) Handle(w http.ResponseWriter, r *http.Request) {
 
 	endpoint := ro.config.Endpoints.Match(r.URL.Path)
 	if endpoint == nil {
-		UndefinedEndpoint(w, http.StatusNotFound)
+		if err := UndefinedEndpoint(w, http.StatusNotFound); err != nil {
+			ro.logger.Println(err)
+		}
 		return
 	}
 
 	method := endpoint.Methods.Match(r.Method)
 	if method == nil {
-		UndefinedEndpoint(w, http.StatusMethodNotAllowed)
+		if err := UndefinedEndpoint(w, http.StatusMethodNotAllowed); err != nil {
+			ro.logger.Println(err)
+		}
+		return
+	}
+
+	if len(method.Queries) == 0 {
+		if err := method.Handler.Func(w, method.Handler.Body); err != nil {
+			ro.logger.Println(err)
+		}
 		return
 	}
 
 	var body bytes.Buffer
-	if 0 < len(method.Queries) {
-		t, err := template.New("body").Parse(method.Handler.Body.(string))
-		if err != nil {
-			ro.logger.Println(err)
-			return
-		}
-		qmap := map[string]string{}
-		for _, v := range method.Queries {
-			qmap[v] = r.URL.Query().Get(v)
-		}
-		if err = t.Execute(&body, qmap); err != nil {
-			ro.logger.Println(err)
-			return
-		}
-		method.Handler.Func(w, body.String())
+	t, err := template.New("body").Parse(method.Handler.Body.(string))
+	if err != nil {
+		ro.logger.Println(err)
 		return
-	} else {
-		method.Handler.Func(w, method.Handler.Body)
+	}
+	qmap := map[string]string{}
+	for _, v := range method.Queries {
+		qmap[v] = r.URL.Query().Get(v)
+	}
+	if err = t.Execute(&body, qmap); err != nil {
+		ro.logger.Println(err)
+		return
+	}
+	if err = method.Handler.Func(w, body.String()); err != nil {
+		ro.logger.Println(err)
 	}
 }

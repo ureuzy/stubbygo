@@ -47,16 +47,22 @@ type Response struct {
 
 type Responses []*Response
 
-func (r *Response) Func(w http.ResponseWriter, body any) {
+func (r *Response) Func(w http.ResponseWriter, body any) error {
 	for key, value := range r.Headers {
 		w.Header().Set(key, value)
 	}
 
 	w.WriteHeader(r.StatusCode)
-	fmt.Fprint(w, body)
+	if _, err := fmt.Fprint(w, body); err != nil {
+		return err
+	}
+	return nil
 }
 
-func UndefinedEndpoint(w http.ResponseWriter, status int) {
+func UndefinedEndpoint(w http.ResponseWriter, status int) error {
 	w.WriteHeader(status)
-	fmt.Fprint(w, http.StatusText(status))
+	if _, err := fmt.Fprint(w, http.StatusText(status)); err != nil {
+		return err
+	}
+	return nil
 }
