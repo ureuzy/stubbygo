@@ -1,6 +1,12 @@
 # stubbygo
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Docker](https://img.shields.io/docker/v/masanetes/stubbygo/v0.1.0?color=blue&logo=docker)](https://hub.docker.com/repository/docker/masanetes/stubbygo)
+[![report](https://goreportcard.com/badge/github.com/masanetes/stubbygo)](https://goreportcard.com/report/github.com/masanetes/stubbygo)
+
 Can build a stub server by defining endpoints in yaml beforehand
+
+- Dockerized
 
 # Quick Start
 
@@ -64,4 +70,10 @@ Date: Thu, 07 Jul 2022 09:31:13 GMT
 Content-Length: 91
 
 hello,world
+```
+
+# Docker
+
+```
+docker run -d -p 8080:8080 -v $(pwd)/endpoints.yaml:/config/endpoints.yaml  masanetes/stubbygo
 ```
