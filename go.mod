@@ -1,4 +1,4 @@
-module github.com/masanetes/stubbygo
+module github.com/ureuzy/stubbygo
 
 go 1.18
 

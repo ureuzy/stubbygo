@@ -1,8 +1,8 @@
 # stubbygo
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Docker](https://img.shields.io/docker/v/masanetes/stubbygo/v0.1.0?color=blue&logo=docker)](https://hub.docker.com/repository/docker/masanetes/stubbygo)
-[![report](https://goreportcard.com/badge/github.com/masanetes/stubbygo)](https://goreportcard.com/report/github.com/masanetes/stubbygo)
+[![Docker](https://img.shields.io/docker/v/ureuzy/stubbygo/v0.1.0?color=blue&logo=docker)](https://hub.docker.com/repository/docker/ureuzy/stubbygo)
+[![report](https://goreportcard.com/badge/github.com/ureuzy/stubbygo)](https://goreportcard.com/report/github.com/ureuzy/stubbygo)
 
 Can build a stub server by defining endpoints in yaml beforehand
 
@@ -75,5 +75,5 @@ hello,world
 # Docker
 
 ```
-docker run -d -p 8080:8080 -v $(pwd)/endpoints.yaml:/config/endpoints.yaml  masanetes/stubbygo
+docker run -d -p 8080:8080 -v $(pwd)/endpoints.yaml:/config/endpoints.yaml  ureuzy/stubbygo
 ```

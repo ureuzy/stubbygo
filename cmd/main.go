@@ -4,7 +4,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/masanetes/stubbygo/pkg/server"
+	"github.com/ureuzy/stubbygo/pkg/server"
 )
 
 var (
