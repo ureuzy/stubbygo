@@ -1,7 +1,7 @@
 # stubbygo
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Docker](https://img.shields.io/docker/v/ureuzy/stubbygo/v0.1.0?color=blue&logo=docker)](https://hub.docker.com/repository/docker/ureuzy/stubbygo)
+[![Docker](https://img.shields.io/docker/v/ureuzy/stubbygo/v0.1.1?color=blue&logo=docker)](https://hub.docker.com/repository/docker/ureuzy/stubbygo)
 [![report](https://goreportcard.com/badge/github.com/ureuzy/stubbygo)](https://goreportcard.com/report/github.com/ureuzy/stubbygo)
 
 Can build a stub server by defining endpoints in yaml beforehand
